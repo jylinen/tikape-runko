@@ -8,14 +8,16 @@ import tikape.runko.database.Database;
 import tikape.runko.database.KeskustelualueDao;
 import tikape.runko.database.ViestiketjuDao;
 
+
 public class Main {
 
     public static void main(String[] args) throws Exception {
         Database database = new Database("jdbc:sqlite:keskustelu.db");
         database.init();
-
-        KeskustelualueDao keskustelualueDao = new KeskustelualueDao(database);
+        
         ViestiketjuDao viestiketjuDao = new ViestiketjuDao(database);
+        KeskustelualueDao keskustelualueDao = new KeskustelualueDao(database);
+        
 
         get("/", (req, res) -> {
             HashMap map = new HashMap<>();
@@ -33,7 +35,7 @@ public class Main {
 
         get("/keskustelualueet/:id", (req, res) -> {
             HashMap map = new HashMap<>();
-            map.put("Viestiketjut", viestiketjuDao.findAll());
+            map.put("Viestiketjut", keskustelualueDao.findAll());
 
             return new ModelAndView(map, "Viestiketjut");
         }, new ThymeleafTemplateEngine());

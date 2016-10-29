@@ -27,5 +27,13 @@ public class Keskustelualue {
     public void setNimi(String nimi) {
         this.nimi = nimi;
     }
+    
+    public List getViestiketjut() {
+        return this.viestiketjut;
+    }
+    
+    public void addToViestiketjut(Viestiketju viestiketju) {
+        this.viestiketjut.add(viestiketju);
+    }
 
 }
