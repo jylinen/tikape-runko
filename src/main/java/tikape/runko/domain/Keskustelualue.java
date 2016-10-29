@@ -3,21 +3,21 @@ import java.util.*;
 
 public class Keskustelualue {
 
-    private Integer alue_id;
+    private Integer id;
     private String nimi;
-    private List<Viestiketju> Viestiketjut;
+    private List<Viestiketju> viestiketjut;
 
     public Keskustelualue(Integer id, String nimi) {
-        this.alue_id = id;
+        this.id = id;
         this.nimi = nimi;
     }
 
     public Integer getId() {
-        return alue_id;
+        return id;
     }
 
     public void setId(Integer id) {
-        this.alue_id = id;
+        this.id = id;
     }
 
     public String getNimi() {

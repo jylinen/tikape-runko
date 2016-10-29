@@ -1,59 +1,54 @@
- /* To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package tikape.runko.domain;
 import java.util.*;
 import java.sql.*;
-/**
- *
- * @author ruatuu
- */
+
+
 public class KeskusteluAvaus {
     
-    private Integer Avaus_id;
-    private String Lahettaja;
-    private Timestamp LahetysAika;
-    private String Viesti;
-    private Viestiketju ketju_id;
-    private List<KeskusteluVastaus>KeskustelunVastaukset;
+    private Integer id;
+    private String lahettaja;
+    private Timestamp lahetysaika;
+    private String viesti;
+    private Viestiketju viestiketju;
+    private List<KeskusteluVastaus> keskusteluvastaukset;
 
-    public KeskusteluAvaus(Integer id, String Lahettaja, Timestamp LahetysAika, String Viesti) {
-        this.Avaus_id = id;
-        this.Lahettaja = Lahettaja;
-        this.LahetysAika = LahetysAika;
-        this.Viesti = Viesti;
+    public KeskusteluAvaus(Integer id, String lahettaja, Timestamp lahetysaika, String viesti) {
+        this.id = id;
+        this.lahettaja = lahettaja;
+        this.lahetysaika = lahetysaika;
+        this.viesti = viesti;
     }
 
     public Integer getId() {
-        return Avaus_id;
+        return id;
     }
 
     public void setId(Integer id) {
-        this.Avaus_id = id;
+        this.id = id;
     }
 
     public String getLahettaja() {
-        return Lahettaja;
+        return lahettaja;
     }
 
     public void setLahettaja(String Lahettaja) {
-        this.Lahettaja = Lahettaja;
+        this.lahettaja = Lahettaja;
     }
     
     public Timestamp getLahetysAika() {
-        return LahetysAika;
+        return lahetysaika;
     }
 
     public void setLahetysAika(Timestamp LahetysAika) {
-        this.LahetysAika = LahetysAika;
+        this.lahetysaika = LahetysAika;
     }
     public String getViesti() {
-        return Viesti;
+        return viesti;
     }
 
     public void setViesti(String Viesti) {
-        this.Viesti = Viesti;
+        this.viesti = Viesti;
     }
 
 }

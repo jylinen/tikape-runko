@@ -33,7 +33,7 @@ public class Main {
 
         get("/keskustelualueet/:id", (req, res) -> {
             HashMap map = new HashMap<>();
-            map.put("Viestiketjut", viestiketjuDao.findOne(Integer.parseInt(req.params("id"))));
+            map.put("Viestiketjut", viestiketjuDao.findAll());
 
             return new ModelAndView(map, "Viestiketjut");
         }, new ThymeleafTemplateEngine());

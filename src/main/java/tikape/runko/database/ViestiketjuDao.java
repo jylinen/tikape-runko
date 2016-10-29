@@ -1,23 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package tikape.runko.database;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.*;
+import java.util.*;
+import tikape.runko.domain.Keskustelualue;
 import tikape.runko.domain.Viestiketju;
-/**
- *
- * @author ruatuu
- */
+
+
 public class ViestiketjuDao implements Dao<Viestiketju, Integer> {
 
     private Database database;
+    private Dao<Keskustelualue, Integer> keskustelualueDao;
 
     public ViestiketjuDao(Database database) {
         this.database = database;
@@ -25,7 +17,7 @@ public class ViestiketjuDao implements Dao<Viestiketju, Integer> {
      @Override
     public Viestiketju findOne(Integer key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Viestiketju WHERE ketju_id = ?"); // vai ketju_ID:N tilalle id??
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Viestiketju WHERE id = ?"); 
         stmt.setObject(1, key);
 
         ResultSet rs = stmt.executeQuery();
@@ -34,7 +26,7 @@ public class ViestiketjuDao implements Dao<Viestiketju, Integer> {
             return null;
         }
 
-        Integer id = rs.getInt("ketju_id");
+        Integer id = rs.getInt("id");
         String nimi = rs.getString("nimi");
 
         Viestiketju v = new Viestiketju(id, nimi);
@@ -46,11 +38,12 @@ public class ViestiketjuDao implements Dao<Viestiketju, Integer> {
         return v;
     }
 
-    @Override
+    
     public List<Viestiketju> findAll() throws SQLException {
 
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Viestiketju");
+        
 
         ResultSet rs = stmt.executeQuery();
         List<Viestiketju> viestiketjut = new ArrayList<>();
@@ -66,6 +59,36 @@ public class ViestiketjuDao implements Dao<Viestiketju, Integer> {
         stmt.close();
         connection.close();
 
+        return viestiketjut;
+    }
+    
+    public List<Viestiketju> findAllIn(Collection<Integer> keys) throws SQLException {
+        if (keys.isEmpty()) {
+            return new ArrayList<>();
+        }
+        
+        StringBuilder muuttujat = new StringBuilder("?");
+        for (int i = 1; i < keys.size(); i++) {
+            muuttujat.append(", ?");
+        }
+        
+        Connection connection = database.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Viestiketju WHERE id IN (" + muuttujat + ")");
+        int laskuri = 1;
+        for (Integer key : keys) {
+            stmt.setObject(laskuri, key);
+            laskuri++;
+        }
+        
+        ResultSet rs = stmt.executeQuery();
+        List<Viestiketju> viestiketjut = new ArrayList<>();
+        while (rs.next()) {
+            Integer id = rs.getInt("id");
+            String nimi = rs.getString("nimi");
+            
+            viestiketjut.add(new Viestiketju(id, nimi));
+        }
+        
         return viestiketjut;
     }
 

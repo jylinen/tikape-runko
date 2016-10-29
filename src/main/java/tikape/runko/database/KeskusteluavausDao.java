@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.*;
 import java.sql.*;
 import tikape.runko.domain.KeskusteluAvaus;
+import tikape.runko.domain.Viestiketju;
 
 public class KeskusteluavausDao implements Dao<KeskusteluAvaus, Integer> {
 
@@ -26,7 +27,7 @@ public class KeskusteluavausDao implements Dao<KeskusteluAvaus, Integer> {
     @Override
     public KeskusteluAvaus findOne(Integer key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskusteluavaus WHERE avaus_id = ?");
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskusteluavaus WHERE id = ?");
         stmt.setObject(1, key);
 
         ResultSet rs = stmt.executeQuery();
@@ -35,12 +36,12 @@ public class KeskusteluavausDao implements Dao<KeskusteluAvaus, Integer> {
             return null;
         }
 
-        Integer avaus_id = rs.getInt("avaus_id");
-        String Lahettaja = rs.getString("Lahettaja");
-        Timestamp LahetysAika = rs.getTimestamp("lahetysAika");
-        String Viesti = rs.getString("Viesti");
+        Integer id = rs.getInt("id");
+        String lahettaja = rs.getString("lahettaja");
+        Timestamp lahetysaika = rs.getTimestamp("lahetysaika");
+        String viesti = rs.getString("viesti");
 
-        KeskusteluAvaus ka = new KeskusteluAvaus(avaus_id, Lahettaja, LahetysAika, Viesti);
+        KeskusteluAvaus ka = new KeskusteluAvaus(id, lahettaja, lahetysaika, viesti);
 
         rs.close();
         stmt.close();
@@ -58,12 +59,12 @@ public class KeskusteluavausDao implements Dao<KeskusteluAvaus, Integer> {
         ResultSet rs = stmt.executeQuery();
         List<KeskusteluAvaus> Keskusteluavaukset = new ArrayList<>();
         while (rs.next()) {
-            Integer avaus_id = rs.getInt("avaus_id");
-            String Lahettaja = rs.getString("Lahettaja");
-            Timestamp LahetysAika = rs.getTimestamp("lahetysAika");
-            String Viesti = rs.getString("Viesti");
+            Integer id = rs.getInt("id");
+            String lahettaja = rs.getString("lahettaja");
+            Timestamp lahetysaika = rs.getTimestamp("lahetysaika");
+            String viesti = rs.getString("viesti");
 
-            Keskusteluavaukset.add(new KeskusteluAvaus(avaus_id, Lahettaja, LahetysAika, Viesti));
+            KeskusteluAvaus ka = new KeskusteluAvaus(id, lahettaja, lahetysaika, viesti);
         }
 
         rs.close();
@@ -71,6 +72,39 @@ public class KeskusteluavausDao implements Dao<KeskusteluAvaus, Integer> {
         connection.close();
 
         return Keskusteluavaukset;
+    }
+    
+    public List<KeskusteluAvaus> findAllIn(Collection<Integer> keys) throws SQLException {
+        if (keys.isEmpty()) {
+            return new ArrayList<>();
+        }
+        
+        StringBuilder muuttujat = new StringBuilder("?");
+        for (int i = 1; i < keys.size(); i++) {
+            muuttujat.append(", ?");
+        }
+        
+        Connection connection = database.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskusteluavaus WHERE id IN (" + muuttujat + ")");
+        int laskuri = 1;
+        for (Integer key : keys) {
+            stmt.setObject(laskuri, key);
+            laskuri++;
+        }
+        
+        ResultSet rs = stmt.executeQuery();
+        List<KeskusteluAvaus> keskusteluavaukset = new ArrayList<>();
+        while (rs.next()) {
+            Integer id = rs.getInt("id");
+            String lahettaja = rs.getString("lahettaja");
+            Timestamp lahetysaika = rs.getTimestamp("lahetysaika");
+            String viesti = rs.getString("viesti");
+            
+            
+            keskusteluavaukset.add(new KeskusteluAvaus(id, lahettaja, lahetysaika, viesti));
+        }
+        
+        return keskusteluavaukset;
     }
 
     @Override
