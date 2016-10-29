@@ -36,14 +36,22 @@ public class Database {
     }
 
     private List<String> sqliteLauseet() {
-        ArrayList<String> lista = new ArrayList<>();
+        ArrayList<String> taulut = new ArrayList<>();// lisää vielä keskusteluvastaus ja keskusteluavaus taulut.sekä insert intolla loput tiedot
 
         // tietokantataulujen luomiseen tarvittavat komennot suoritusjärjestyksessä
-        lista.add("CREATE TABLE Opiskelija (id integer PRIMARY KEY, nimi varchar(255));");
-        lista.add("INSERT INTO Opiskelija (nimi) VALUES ('Platon');");
-        lista.add("INSERT INTO Opiskelija (nimi) VALUES ('Aristoteles');");
-        lista.add("INSERT INTO Opiskelija (nimi) VALUES ('Homeros');");
+        taulut.add("CREATE TABLE KeskusteluAlue (alue_id integer PRIMARY KEY, nimi varchar(255));");
+        taulut.add("INSERT INTO KeskusteluAlue (nimi) VALUES ('Traktorit');");
+        taulut.add("INSERT INTO KeskusteluAlue (nimi) VALUES ('Koneet');");
+        taulut.add("INSERT INTO KeskusteluAlue (nimi) VALUES ('Paskakärryt');");
 
-        return lista;
+        // tietokantataulujen luomiseen tarvittavat komennot suoritusjärjestyksessä
+        taulut.add("CREATE TABLE Viestiketju (ketju_id integer PRIMARY KEY, nimi varchar(255), KeskusteluAlue integer, "
+                + "FOREIGN KEY(KeskusteluAlue) REFERENCES KeskusteluAlue(alue_id));");
+        taulut.add("INSERT INTO Viestiketju (nimi) VALUES ('Platon2');");
+        taulut.add("INSERT INTO Viestiketju (nimi) VALUES ('Aristoteles2');");
+        taulut.add("INSERT INTO Viestiketju (nimi) VALUES ('Homeros2');");
+
+        return taulut;
+        
     }
 }
