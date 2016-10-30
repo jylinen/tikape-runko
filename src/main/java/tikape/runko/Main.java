@@ -19,25 +19,21 @@ public class Main {
         KeskustelualueDao keskustelualueDao = new KeskustelualueDao(database);
         
 
-        get("/", (req, res) -> {
+        get("/", (req, res) -> {            
             HashMap map = new HashMap<>();
-            map.put("viesti", "tervehdys");
-
+            map.put("keskustelualueet", keskustelualueDao.findAll());
+            
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
 
-        get("/keskustelualueet", (req, res) -> {
+        get("/keskustelualue/:id", (req, res) -> {
             HashMap map = new HashMap<>();
-            map.put("keskustelualueet", keskustelualueDao.findAll());
+            map.put("keskustelualue", keskustelualueDao.findOne(Integer.parseInt(req.params("id"))));
+            
+            map.put("viestiketjut", viestiketjuDao.findAllIn(Integer.parseInt(req.params("id"))));
 
-            return new ModelAndView(map, "keskustelualueet");
+            return new ModelAndView(map, "keskustelualue");
         }, new ThymeleafTemplateEngine());
-
-        get("/keskustelualueet/:id", (req, res) -> {
-            HashMap map = new HashMap<>();
-            map.put("Viestiketjut", keskustelualueDao.findAll());
-
-            return new ModelAndView(map, "Viestiketjut");
-        }, new ThymeleafTemplateEngine());
+        
     }
 }

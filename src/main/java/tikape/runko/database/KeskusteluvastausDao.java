@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.*;
 import java.sql.*;
+import tikape.runko.domain.KeskusteluAvaus;
 import tikape.runko.domain.KeskusteluVastaus;
 import tikape.runko.domain.Viestiketju;
 
@@ -74,26 +75,14 @@ public class KeskusteluvastausDao implements Dao<KeskusteluVastaus, Integer> {
         return keskusteluvastaukset;
     }
 
-    public List<KeskusteluVastaus> findAllIn(Collection<Integer> keys) throws SQLException {
-        if (keys.isEmpty()) {
-            return new ArrayList<>();
-        }
-
-        StringBuilder muuttujat = new StringBuilder("?");
-        for (int i = 1; i < keys.size(); i++) {
-            muuttujat.append(", ?");
-        }
-
+    public List<KeskusteluVastaus> findAllIn(Integer key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM KeskusteluVastaus WHERE id IN (" + muuttujat + ")");
-        int laskuri = 1;
-        for (Integer key : keys) {
-            stmt.setObject(laskuri, key);
-            laskuri++;
-        }
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM KeskusteluVastaus WHERE keskusteluavaus = ?");
+        stmt.setObject(1, key);
 
         ResultSet rs = stmt.executeQuery();
         List<KeskusteluVastaus> keskusteluvastaukset = new ArrayList<>();
+        
         while (rs.next()) {
             Integer id = rs.getInt("id");
             String lahettaja = rs.getString("lahettaja");
@@ -102,6 +91,10 @@ public class KeskusteluvastausDao implements Dao<KeskusteluVastaus, Integer> {
 
             keskusteluvastaukset.add(new KeskusteluVastaus(id, lahettaja, lahetysaika, viesti));
         }
+
+        rs.close();
+        stmt.close();
+        connection.close();
 
         return keskusteluvastaukset;
     }

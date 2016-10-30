@@ -7,11 +7,11 @@
     </head>
 
     <body>
-        <h1>Keskustelualueet</h1>
+        <h1><span th:text="${keskustelualue.nimi}">keskustelualue</span></h1>
 
         <ol>
-            <li th:each="keskustelualue: ${keskustelualueet}">
-                <span th:text="${keskustelualue.nimi}">opiskelijan nimi</span> <a th:href="${'/keskustelualueet/' + keskustelualue.id}">linkki</a>
+            <li th:each="viestiketju: ${viestiketjut}">
+                <span th:text="${viestiketju.nimi}">ketjun nimi</span> 
             </li>
         </ol>
     </body>

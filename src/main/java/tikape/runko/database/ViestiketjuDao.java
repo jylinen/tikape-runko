@@ -2,6 +2,7 @@
 package tikape.runko.database;
 import java.sql.*;
 import java.util.*;
+import tikape.runko.domain.KeskusteluAvaus;
 import tikape.runko.domain.Keskustelualue;
 import tikape.runko.domain.Viestiketju;
 
@@ -62,33 +63,26 @@ public class ViestiketjuDao implements Dao<Viestiketju, Integer> {
         return viestiketjut;
     }
     
-    public List<Viestiketju> findAllIn(Collection<Integer> keys) throws SQLException {
-        if (keys.isEmpty()) {
-            return new ArrayList<>();
-        }
-        
-        StringBuilder muuttujat = new StringBuilder("?");
-        for (int i = 1; i < keys.size(); i++) {
-            muuttujat.append(", ?");
-        }
-        
+    public List<Viestiketju> findAllIn(Integer key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Viestiketju WHERE id IN (" + muuttujat + ")");
-        int laskuri = 1;
-        for (Integer key : keys) {
-            stmt.setObject(laskuri, key);
-            laskuri++;
-        }
-        
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Viestiketju WHERE keskustelualue = ?");
+        stmt.setObject(1, key);
+
         ResultSet rs = stmt.executeQuery();
         List<Viestiketju> viestiketjut = new ArrayList<>();
+        
         while (rs.next()) {
             Integer id = rs.getInt("id");
             String nimi = rs.getString("nimi");
             
+
             viestiketjut.add(new Viestiketju(id, nimi));
         }
-        
+
+        rs.close();
+        stmt.close();
+        connection.close();
+
         return viestiketjut;
     }
 
