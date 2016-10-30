@@ -16,11 +16,11 @@ public class Vastaus {
         this.lahettaja = lahettaja;
         this.viesti = viesti;
         this.lahetysaika = lahetysaika;
-        this.avaus = avaus;
+    
     }
 
     public Integer getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Integer id) {
@@ -28,21 +28,21 @@ public class Vastaus {
     }
 
     public String getLahettaja() {
-        return lahettaja;
+        return this.lahettaja;
     }
 
     public void setLahettaja(String lahettaja) {
         this.lahettaja = lahettaja;
     }
     public Timestamp getLahetysAika() {
-        return lahetysaika;
+        return this.lahetysaika;
     }
 
     public void setLahetysAika(Timestamp lahetysaika) {
         this.lahetysaika = lahetysaika;
     }
     public String getViesti() {
-        return viesti;
+        return this.viesti;
     }
 
     public void setViesti(String viesti) {

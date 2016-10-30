@@ -21,7 +21,7 @@ public class Avaus {
     }
 
     public Integer getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Integer id) {
@@ -29,7 +29,7 @@ public class Avaus {
     }
 
     public String getLahettaja() {
-        return lahettaja;
+        return this.lahettaja;
     }
 
     public void setLahettaja(String lahettaja) {
@@ -37,14 +37,14 @@ public class Avaus {
     }
     
     public Timestamp getLahetysAika() {
-        return lahetysaika;
+        return this.lahetysaika;
     }
 
     public void setLahetysAika(Timestamp lahetysaika) {
         this.lahetysaika = lahetysaika;
     }
     public String getViesti() {
-        return viesti;
+        return this.viesti;
     }
 
     public void setViesti(String viesti) {

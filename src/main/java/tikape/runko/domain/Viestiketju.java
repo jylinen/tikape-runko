@@ -16,7 +16,7 @@ public class Viestiketju {
     }
 
     public Integer getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Integer id) {
@@ -24,7 +24,7 @@ public class Viestiketju {
     }
 
     public String getNimi() {
-        return nimi;
+        return this.nimi;
     }
 
     public void setNimi(String nimi) {

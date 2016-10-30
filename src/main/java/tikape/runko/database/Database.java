@@ -54,6 +54,7 @@ public class Database {
         taulut.add("CREATE TABLE Avaus (id integer PRIMARY KEY, lahettaja varchar(64) NOT NULL, lahetysaika timestamp, " 
                 + "viesti varchar(3000) NOT NULL, viestiketju integer NOT NULL, FOREIGN KEY(viestiketju) REFERENCES Viestiketju(id));");
         taulut.add("INSERT INTO Avaus (lahettaja, viesti, viestiketju) VALUES ('jussi', 'terve vaan!', 1);");
+        taulut.add("INSERT INTO Avaus (lahettaja, viesti, viestiketju) VALUES ('aatu', 'toimi saatana!', 1);");
         
         taulut.add("CREATE TABLE Vastaus (id integer PRIMARY KEY, lahettaja varchar(64) NOT NULL, lahetysaika timestamp, " 
                 + "viesti varchar(3000) NOT NULL, avaus integer NOT NULL, FOREIGN KEY(avaus) REFERENCES Avaus(id));");

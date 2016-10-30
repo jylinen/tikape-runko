@@ -4,11 +4,7 @@ import java.util.HashMap;
 import spark.ModelAndView;
 import static spark.Spark.*;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
-import tikape.runko.database.AvausDao;
-import tikape.runko.database.Database;
-import tikape.runko.database.KeskustelualueDao;
-import tikape.runko.database.VastausDao;
-import tikape.runko.database.ViestiketjuDao;
+import tikape.runko.database.*;
 
 
 public class Main {
