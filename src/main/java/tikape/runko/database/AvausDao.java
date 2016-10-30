@@ -4,31 +4,23 @@
  * and open the template in the editor.
  */
 package tikape.runko.database;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.*;
 import java.sql.*;
-import tikape.runko.domain.KeskusteluAvaus;
-import tikape.runko.domain.KeskusteluVastaus;
+import tikape.runko.domain.Avaus;
 import tikape.runko.domain.Viestiketju;
 
-public class KeskusteluvastausDao implements Dao<KeskusteluVastaus, Integer> {
+public class AvausDao implements Dao<Avaus, Integer> {
 
     private Database database;
 
-    public KeskusteluvastausDao(Database database) {
+    public AvausDao(Database database) {
         this.database = database;
     }
 
     @Override
-    public KeskusteluVastaus findOne(Integer key) throws SQLException {
+    public Avaus findOne(Integer key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskusteluvastaus WHERE id = ?");//vai id tähän
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Avaus WHERE id = ?");
         stmt.setObject(1, key);
 
         ResultSet rs = stmt.executeQuery();
@@ -37,51 +29,51 @@ public class KeskusteluvastausDao implements Dao<KeskusteluVastaus, Integer> {
             return null;
         }
 
-        Integer viesti_id = rs.getInt("id");
+        Integer id = rs.getInt("id");
         String lahettaja = rs.getString("lahettaja");
-        Timestamp LahetysAika = rs.getTimestamp("lahetysaika");
-        String Viesti = rs.getString("viesti");
+        Timestamp lahetysaika = rs.getTimestamp("lahetysaika");
+        String viesti = rs.getString("viesti");
 
-        KeskusteluVastaus kv = new KeskusteluVastaus(viesti_id, lahettaja, LahetysAika, Viesti);
+        Avaus ka = new Avaus(id, lahettaja, lahetysaika, viesti);
 
         rs.close();
         stmt.close();
         connection.close();
 
-        return kv;
+        return ka;
     }
 
     @Override
-    public List<KeskusteluVastaus> findAll() throws SQLException {
+    public List<Avaus> findAll() throws SQLException {
 
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskusteluvastaus");
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Avaus");
 
         ResultSet rs = stmt.executeQuery();
-        List<KeskusteluVastaus> keskusteluvastaukset = new ArrayList<>();
+        List<Avaus> avaukset = new ArrayList<>();
         while (rs.next()) {
             Integer id = rs.getInt("id");
             String lahettaja = rs.getString("lahettaja");
             Timestamp lahetysaika = rs.getTimestamp("lahetysaika");
             String viesti = rs.getString("viesti");
 
-            keskusteluvastaukset.add(new KeskusteluVastaus(id, lahettaja, lahetysaika, viesti));
+            Avaus ka = new Avaus(id, lahettaja, lahetysaika, viesti);
         }
 
         rs.close();
         stmt.close();
         connection.close();
 
-        return keskusteluvastaukset;
+        return avaukset;
     }
-
-    public List<KeskusteluVastaus> findAllIn(Integer key) throws SQLException {
+    
+    public List<Avaus> findAllIn(Integer key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM KeskusteluVastaus WHERE keskusteluavaus = ?");
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Avaus WHERE viestiketju = ?");
         stmt.setObject(1, key);
 
         ResultSet rs = stmt.executeQuery();
-        List<KeskusteluVastaus> keskusteluvastaukset = new ArrayList<>();
+        List<Avaus> avaukset = new ArrayList<>();
         
         while (rs.next()) {
             Integer id = rs.getInt("id");
@@ -89,14 +81,14 @@ public class KeskusteluvastausDao implements Dao<KeskusteluVastaus, Integer> {
             Timestamp lahetysaika = rs.getTimestamp("lahetysaika");
             String viesti = rs.getString("viesti");
 
-            keskusteluvastaukset.add(new KeskusteluVastaus(id, lahettaja, lahetysaika, viesti));
+            avaukset.add(new Avaus(id, lahettaja, lahetysaika, viesti));
         }
 
         rs.close();
         stmt.close();
         connection.close();
 
-        return keskusteluvastaukset;
+        return avaukset;
     }
 
     @Override

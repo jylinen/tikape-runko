@@ -1,33 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package tikape.runko.database;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.*;
 import java.sql.*;
-import tikape.runko.domain.KeskusteluAvaus;
-import tikape.runko.domain.Viestiketju;
+import tikape.runko.domain.Vastaus;
 
-public class KeskusteluavausDao implements Dao<KeskusteluAvaus, Integer> {
+public class VastausDao implements Dao<Vastaus, Integer> {
 
     private Database database;
 
-    public KeskusteluavausDao(Database database) {
+    public VastausDao(Database database) {
         this.database = database;
     }
 
     @Override
-    public KeskusteluAvaus findOne(Integer key) throws SQLException {
+    public Vastaus findOne(Integer key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskusteluavaus WHERE id = ?");
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Vastaus WHERE id = ?");//vai id tähän
         stmt.setObject(1, key);
 
         ResultSet rs = stmt.executeQuery();
@@ -41,61 +30,61 @@ public class KeskusteluavausDao implements Dao<KeskusteluAvaus, Integer> {
         Timestamp lahetysaika = rs.getTimestamp("lahetysaika");
         String viesti = rs.getString("viesti");
 
-        KeskusteluAvaus ka = new KeskusteluAvaus(id, lahettaja, lahetysaika, viesti);
+        Vastaus kv = new Vastaus(id, lahettaja, viesti, lahetysaika);
 
         rs.close();
         stmt.close();
         connection.close();
 
-        return ka;
+        return kv;
     }
 
     @Override
-    public List<KeskusteluAvaus> findAll() throws SQLException {
+    public List<Vastaus> findAll() throws SQLException {
 
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskusteluavaus");
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Vastaus");
 
         ResultSet rs = stmt.executeQuery();
-        List<KeskusteluAvaus> Keskusteluavaukset = new ArrayList<>();
+        List<Vastaus> vastaukset = new ArrayList<>();
         while (rs.next()) {
             Integer id = rs.getInt("id");
             String lahettaja = rs.getString("lahettaja");
             Timestamp lahetysaika = rs.getTimestamp("lahetysaika");
             String viesti = rs.getString("viesti");
 
-            KeskusteluAvaus ka = new KeskusteluAvaus(id, lahettaja, lahetysaika, viesti);
+            vastaukset.add(new Vastaus(id, lahettaja, viesti, lahetysaika));
         }
 
         rs.close();
         stmt.close();
         connection.close();
 
-        return Keskusteluavaukset;
+        return vastaukset;
     }
-    
-    public List<KeskusteluAvaus> findAllIn(Integer key) throws SQLException {
+
+    public List<Vastaus> findAllIn(Integer key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskusteluavaus WHERE viestiketju = ?");
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Vastaus WHERE avaus = ?");
         stmt.setObject(1, key);
 
         ResultSet rs = stmt.executeQuery();
-        List<KeskusteluAvaus> keskusteluavaukset = new ArrayList<>();
-        
+        List<Vastaus> vastaukset = new ArrayList<>();
+
         while (rs.next()) {
             Integer id = rs.getInt("id");
             String lahettaja = rs.getString("lahettaja");
             Timestamp lahetysaika = rs.getTimestamp("lahetysaika");
             String viesti = rs.getString("viesti");
 
-            keskusteluavaukset.add(new KeskusteluAvaus(id, lahettaja, lahetysaika, viesti));
+            vastaukset.add(new Vastaus(id, lahettaja, viesti, lahetysaika));
         }
 
         rs.close();
         stmt.close();
         connection.close();
 
-        return keskusteluavaukset;
+        return vastaukset;
     }
 
     @Override

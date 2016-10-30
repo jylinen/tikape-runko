@@ -2,7 +2,6 @@
 package tikape.runko.database;
 import java.sql.*;
 import java.util.*;
-import tikape.runko.domain.KeskusteluAvaus;
 import tikape.runko.domain.Keskustelualue;
 import tikape.runko.domain.Viestiketju;
 

@@ -1,23 +1,22 @@
 
 package tikape.runko.domain;
 import java.sql.*;
-import java.util.*;
 
 
-public class KeskusteluVastaus {
+public class Vastaus {
    
     private Integer id;
     private String lahettaja;
     private String viesti;
     private Timestamp lahetysaika;
-    private KeskusteluAvaus keskusteluAvaus;
+    private Integer avaus;
 
-    public KeskusteluVastaus(Integer id, String lahettaja, Timestamp lahetysaika, String viesti) {
+    public Vastaus(Integer id, String lahettaja, String viesti, Timestamp lahetysaika) {
         this.id = id;
         this.lahettaja = lahettaja;
         this.viesti = viesti;
         this.lahetysaika = lahetysaika;
-        this.keskusteluAvaus = keskusteluAvaus;
+        this.avaus = avaus;
     }
 
     public Integer getId() {
@@ -32,22 +31,22 @@ public class KeskusteluVastaus {
         return lahettaja;
     }
 
-    public void setLahettaja(String Lahettaja) {
-        this.lahettaja = Lahettaja;
+    public void setLahettaja(String lahettaja) {
+        this.lahettaja = lahettaja;
     }
     public Timestamp getLahetysAika() {
         return lahetysaika;
     }
 
-    public void setLahetysAika(Timestamp LahetysAika) {
-        this.lahetysaika = LahetysAika;
+    public void setLahetysAika(Timestamp lahetysaika) {
+        this.lahetysaika = lahetysaika;
     }
     public String getViesti() {
         return viesti;
     }
 
-    public void setViesti(String Viesti) {
-        this.viesti = Viesti;
+    public void setViesti(String viesti) {
+        this.viesti = viesti;
     }
 
 }

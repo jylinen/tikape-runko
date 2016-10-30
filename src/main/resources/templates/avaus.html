@@ -7,8 +7,12 @@
     </head>
 
     <body>
-        <h1>Hei <span th:text="${Viestiketju.nimi}">keskustelualue</span>!</h1>
+        <h1><span th:text="${avaus.viesti}">keskustelualue</span></h1>
 
-        <p>Olet saapunut keskustelualueelle <span th:text="${Viestiketju.nimi}">opiskelija</span> .</p>
+        <ol>
+            <li th:each="vastaus: ${vastaukset}">
+                <span th:text="${vastaus.viesti}">vastauksen viesti</span> 
+            </li>
+        </ol>
     </body>
 </html>

@@ -45,21 +45,19 @@ public class Database {
         taulut.add("INSERT INTO Keskustelualue (nimi) VALUES ('Pelit');");
         taulut.add("INSERT INTO Keskustelualue (nimi) VALUES ('Koneet');");
 
-        // tietokantataulujen luomiseen tarvittavat komennot suoritusjärjestyksessä
-        //taulut.add("DROP TABLE Viestiketju;");
         taulut.add("CREATE TABLE Viestiketju (id integer PRIMARY KEY, nimi varchar(255), keskustelualue integer, "
                 + "FOREIGN KEY(Keskustelualue) REFERENCES Keskustelualue(id));");
         taulut.add("INSERT INTO Viestiketju (nimi, keskustelualue) VALUES ('Testi', 1);");
         taulut.add("INSERT INTO Viestiketju (nimi, keskustelualue) VALUES ('Testi2', 2);");
         taulut.add("INSERT INTO Viestiketju (nimi, keskustelualue) VALUES ('TestiEri', 1);");
         
-        taulut.add("CREATE TABLE KeskusteluAvaus (id integer PRIMARY KEY, lahettaja varchar(64) NOT NULL, lahetysaika timestamp NOT NULL, " 
+        taulut.add("CREATE TABLE Avaus (id integer PRIMARY KEY, lahettaja varchar(64) NOT NULL, lahetysaika timestamp, " 
                 + "viesti varchar(3000) NOT NULL, viestiketju integer NOT NULL, FOREIGN KEY(viestiketju) REFERENCES Viestiketju(id));");
-        taulut.add("INSERT INTO KeskusteluAvaus (lahettaja, viesti, viestiketju) VALUES ('jussi', 'terve vaan!', 1);");
+        taulut.add("INSERT INTO Avaus (lahettaja, viesti, viestiketju) VALUES ('jussi', 'terve vaan!', 1);");
         
-        taulut.add("CREATE TABLE KeskusteluVastaus (id integer NOT NULL UNIQUE, lahettaja varchar(64) NOT NULL, lahetysaika timestamp NOT NULL, " 
-                + "viesti varchar(3000) NOT NULL, keskusteluavaus integer NOT NULL, FOREIGN KEY(keskusteluavaus) REFERENCES KeskusteluAvaus(id));");
-        taulut.add("INSERT INTO KeskusteluVastaus (lahettaja, viesti, keskusteluavaus) VALUES ('aatu', 'terve!', 1);");
+        taulut.add("CREATE TABLE Vastaus (id integer PRIMARY KEY, lahettaja varchar(64) NOT NULL, lahetysaika timestamp, " 
+                + "viesti varchar(3000) NOT NULL, avaus integer NOT NULL, FOREIGN KEY(avaus) REFERENCES Avaus(id));");
+        taulut.add("INSERT INTO Vastaus (lahettaja, viesti, avaus) VALUES ('aatu', 'terve!', 1);");
 
         return taulut;
         

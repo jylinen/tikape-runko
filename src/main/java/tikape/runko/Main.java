@@ -4,8 +4,10 @@ import java.util.HashMap;
 import spark.ModelAndView;
 import static spark.Spark.*;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
+import tikape.runko.database.AvausDao;
 import tikape.runko.database.Database;
 import tikape.runko.database.KeskustelualueDao;
+import tikape.runko.database.VastausDao;
 import tikape.runko.database.ViestiketjuDao;
 
 
@@ -15,8 +17,10 @@ public class Main {
         Database database = new Database("jdbc:sqlite:keskustelu.db");
         database.init();
         
-        ViestiketjuDao viestiketjuDao = new ViestiketjuDao(database);
         KeskustelualueDao keskustelualueDao = new KeskustelualueDao(database);
+        ViestiketjuDao viestiketjuDao = new ViestiketjuDao(database);
+        AvausDao avausDao = new AvausDao(database);
+        VastausDao vastausDao = new VastausDao(database);
         
 
         get("/", (req, res) -> {            
@@ -35,5 +39,22 @@ public class Main {
             return new ModelAndView(map, "keskustelualue");
         }, new ThymeleafTemplateEngine());
         
+        get("/keskustelualue/:id/viestiketju/:id", (req, res) -> {
+            HashMap map = new HashMap<>();
+            map.put("viestiketju", viestiketjuDao.findOne(Integer.parseInt(req.params("id"))));
+            
+            map.put("avaukset", avausDao.findAllIn(Integer.parseInt(req.params("id"))));
+
+            return new ModelAndView(map, "viestiketju");
+        }, new ThymeleafTemplateEngine());
+        
+        get("/keskustelualue/:id/viestiketju/:id/avaus/:id", (req, res) -> {
+            HashMap map = new HashMap<>();
+            map.put("avaus", avausDao.findOne(Integer.parseInt(req.params("id"))));
+            
+            map.put("vastaukset", vastausDao.findAllIn(Integer.parseInt(req.params("id"))));
+
+            return new ModelAndView(map, "avaus");
+        }, new ThymeleafTemplateEngine());
     }
 }

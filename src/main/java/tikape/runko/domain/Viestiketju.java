@@ -1,7 +1,6 @@
 
 package tikape.runko.domain;
 import java.util.*;
-import java.sql.*;
 
 
 public class Viestiketju {
@@ -9,7 +8,7 @@ public class Viestiketju {
     private Integer id;
     private String nimi;
     private Keskustelualue keskustelualue; 
-    private List<KeskusteluAvaus> keskustelunavaukset;
+    private List<Avaus> keskustelunavaukset;
 
     public Viestiketju(Integer id, String nimi) {
         this.id = id;

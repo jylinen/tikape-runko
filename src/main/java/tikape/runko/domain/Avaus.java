@@ -4,16 +4,16 @@ import java.util.*;
 import java.sql.*;
 
 
-public class KeskusteluAvaus {
+public class Avaus {
     
     private Integer id;
     private String lahettaja;
     private Timestamp lahetysaika;
     private String viesti;
     private Viestiketju viestiketju;
-    private List<KeskusteluVastaus> keskusteluvastaukset;
+    private List<Vastaus> keskusteluvastaukset;
 
-    public KeskusteluAvaus(Integer id, String lahettaja, Timestamp lahetysaika, String viesti) {
+    public Avaus(Integer id, String lahettaja, Timestamp lahetysaika, String viesti) {
         this.id = id;
         this.lahettaja = lahettaja;
         this.lahetysaika = lahetysaika;
@@ -32,23 +32,23 @@ public class KeskusteluAvaus {
         return lahettaja;
     }
 
-    public void setLahettaja(String Lahettaja) {
-        this.lahettaja = Lahettaja;
+    public void setLahettaja(String lahettaja) {
+        this.lahettaja = lahettaja;
     }
     
     public Timestamp getLahetysAika() {
         return lahetysaika;
     }
 
-    public void setLahetysAika(Timestamp LahetysAika) {
-        this.lahetysaika = LahetysAika;
+    public void setLahetysAika(Timestamp lahetysaika) {
+        this.lahetysaika = lahetysaika;
     }
     public String getViesti() {
         return viesti;
     }
 
-    public void setViesti(String Viesti) {
-        this.viesti = Viesti;
+    public void setViesti(String viesti) {
+        this.viesti = viesti;
     }
 
 }
