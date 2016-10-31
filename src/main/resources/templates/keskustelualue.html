@@ -10,9 +10,9 @@
         <h1><span th:text="${keskustelualue.nimi}">keskustelualue</span></h1>
 
         <ol>
-            <li th:each="viestiketju: ${viestiketjut}">
-                <span th:text="${viestiketju.nimi}">ketjun nimi</span> 
-                <a th:href="${'/keskustelualue/' + keskustelualue.id + '/viestiketju/' + viestiketju.id}">linkki</a>
+            <li th:each="avaus: ${avaukset}">
+                <span th:text="${avaus.otsikko}">ketjun nimi</span> 
+                <a th:href="${'/keskustelualue/' + keskustelualue.id + '/avaus/' + avaus.id}">linkki</a>
             </li>
         </ol>
     </body>

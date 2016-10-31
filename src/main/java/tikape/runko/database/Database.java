@@ -51,10 +51,10 @@ public class Database {
         taulut.add("INSERT INTO Viestiketju (nimi, keskustelualue) VALUES ('Testi2', 2);");
         taulut.add("INSERT INTO Viestiketju (nimi, keskustelualue) VALUES ('TestiEri', 1);");
         
-        taulut.add("CREATE TABLE Avaus (id integer PRIMARY KEY, lahettaja varchar(64) NOT NULL, lahetysaika timestamp, " 
-                + "viesti varchar(3000) NOT NULL, viestiketju integer NOT NULL, FOREIGN KEY(viestiketju) REFERENCES Viestiketju(id));");
-        taulut.add("INSERT INTO Avaus (lahettaja, viesti, viestiketju) VALUES ('jussi', 'terve vaan!', 1);");
-        taulut.add("INSERT INTO Avaus (lahettaja, viesti, viestiketju) VALUES ('aatu', 'toimi saatana!', 1);");
+        taulut.add("CREATE TABLE Avaus (id integer PRIMARY KEY, lahettaja varchar(64) NOT NULL, otsikko varchar(20) NOT NULL, lahetysaika timestamp, " 
+                + "viesti varchar(3000) NOT NULL, keskustelualue integer NOT NULL, FOREIGN KEY(keskustelualue) REFERENCES Viestiketju(id));");
+        taulut.add("INSERT INTO Avaus (lahettaja, otsikko, viesti, keskustelualue) VALUES ('jussi', 'testi', 'terve vaan!', 1);");
+        taulut.add("INSERT INTO Avaus (lahettaja, otsikko, viesti, keskustelualue) VALUES ('aatu', 'testi2', 'toimi saatana!', 1);");
         
         taulut.add("CREATE TABLE Vastaus (id integer PRIMARY KEY, lahettaja varchar(64) NOT NULL, lahetysaika timestamp, " 
                 + "viesti varchar(3000) NOT NULL, avaus integer NOT NULL, FOREIGN KEY(avaus) REFERENCES Avaus(id));");

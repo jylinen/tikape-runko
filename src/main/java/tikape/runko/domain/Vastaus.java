@@ -7,16 +7,15 @@ public class Vastaus {
    
     private Integer id;
     private String lahettaja;
-    private String viesti;
     private Timestamp lahetysaika;
-    private Integer avaus;
+    private String viesti;
+    private Avaus avaus;
 
-    public Vastaus(Integer id, String lahettaja, String viesti, Timestamp lahetysaika) {
+    public Vastaus(Integer id, String lahettaja, Timestamp lahetysaika, String viesti) {
         this.id = id;
         this.lahettaja = lahettaja;
-        this.viesti = viesti;
         this.lahetysaika = lahetysaika;
-    
+        this.viesti = viesti;
     }
 
     public Integer getId() {
@@ -41,6 +40,7 @@ public class Vastaus {
     public void setLahetysAika(Timestamp lahetysaika) {
         this.lahetysaika = lahetysaika;
     }
+    
     public String getViesti() {
         return this.viesti;
     }

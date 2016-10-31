@@ -5,7 +5,7 @@ public class Keskustelualue {
 
     private Integer id;
     private String nimi;
-    private List<Viestiketju> viestiketjut;
+    private List<Avaus> avaukset;
 
     public Keskustelualue(Integer id, String nimi) {
         this.id = id;
@@ -28,12 +28,12 @@ public class Keskustelualue {
         this.nimi = nimi;
     }
     
-    public List getViestiketjut() {
-        return this.viestiketjut;
+    public List getAvaukset() {
+        return this.avaukset;
     }
     
-    public void addToViestiketjut(Viestiketju viestiketju) {
-        this.viestiketjut.add(viestiketju);
+    public void addToAvaukset(Avaus avaus) {
+        this.avaukset.add(avaus);
     }
 
 }

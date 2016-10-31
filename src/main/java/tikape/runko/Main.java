@@ -14,7 +14,6 @@ public class Main {
         database.init();
         
         KeskustelualueDao keskustelualueDao = new KeskustelualueDao(database);
-        ViestiketjuDao viestiketjuDao = new ViestiketjuDao(database);
         AvausDao avausDao = new AvausDao(database);
         VastausDao vastausDao = new VastausDao(database);
         
@@ -30,21 +29,12 @@ public class Main {
             HashMap map = new HashMap<>();
             map.put("keskustelualue", keskustelualueDao.findOne(Integer.parseInt(req.params("id"))));
             
-            map.put("viestiketjut", viestiketjuDao.findAllIn(Integer.parseInt(req.params("id"))));
+            map.put("avaukset", avausDao.findAllIn(Integer.parseInt(req.params("id"))));
 
             return new ModelAndView(map, "keskustelualue");
         }, new ThymeleafTemplateEngine());
         
-        get("/keskustelualue/:id/viestiketju/:id", (req, res) -> {
-            HashMap map = new HashMap<>();
-            map.put("viestiketju", viestiketjuDao.findOne(Integer.parseInt(req.params("id"))));
-            
-            map.put("avaukset", avausDao.findAllIn(Integer.parseInt(req.params("id"))));
-
-            return new ModelAndView(map, "viestiketju");
-        }, new ThymeleafTemplateEngine());
-        
-        get("/keskustelualue/:id/viestiketju/:id/avaus/:id", (req, res) -> {
+        get("/keskustelualue/:id/avaus/:id", (req, res) -> {
             HashMap map = new HashMap<>();
             map.put("avaus", avausDao.findOne(Integer.parseInt(req.params("id"))));
             
@@ -52,5 +42,7 @@ public class Main {
 
             return new ModelAndView(map, "avaus");
         }, new ThymeleafTemplateEngine());
+        
+        
     }
 }

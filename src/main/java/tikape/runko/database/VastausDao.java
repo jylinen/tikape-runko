@@ -30,7 +30,7 @@ public class VastausDao implements Dao<Vastaus, Integer> {
         Timestamp lahetysaika = rs.getTimestamp("lahetysaika");
         String viesti = rs.getString("viesti");
 
-        Vastaus kv = new Vastaus(id, lahettaja, viesti, lahetysaika);
+        Vastaus kv = new Vastaus(id, lahettaja, lahetysaika, viesti);
 
         rs.close();
         stmt.close();
@@ -53,7 +53,7 @@ public class VastausDao implements Dao<Vastaus, Integer> {
             Timestamp lahetysaika = rs.getTimestamp("lahetysaika");
             String viesti = rs.getString("viesti");
 
-            vastaukset.add(new Vastaus(id, lahettaja, viesti, lahetysaika));
+            vastaukset.add(new Vastaus(id, lahettaja, lahetysaika, viesti));
         }
 
         rs.close();
@@ -77,7 +77,7 @@ public class VastausDao implements Dao<Vastaus, Integer> {
             Timestamp lahetysaika = rs.getTimestamp("lahetysaika");
             String viesti = rs.getString("viesti");
 
-            vastaukset.add(new Vastaus(id, lahettaja, viesti, lahetysaika));
+            vastaukset.add(new Vastaus(id, lahettaja, lahetysaika, viesti));
         }
 
         rs.close();

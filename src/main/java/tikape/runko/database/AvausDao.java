@@ -7,7 +7,6 @@ package tikape.runko.database;
 import java.util.*;
 import java.sql.*;
 import tikape.runko.domain.Avaus;
-import tikape.runko.domain.Viestiketju;
 
 public class AvausDao implements Dao<Avaus, Integer> {
 
@@ -31,10 +30,11 @@ public class AvausDao implements Dao<Avaus, Integer> {
 
         Integer id = rs.getInt("id");
         String lahettaja = rs.getString("lahettaja");
+        String otsikko = rs.getString("otsikko");
         Timestamp lahetysaika = rs.getTimestamp("lahetysaika");
         String viesti = rs.getString("viesti");
 
-        Avaus ka = new Avaus(id, lahettaja, lahetysaika, viesti);
+        Avaus ka = new Avaus(id, lahettaja, otsikko, lahetysaika, viesti);
 
         rs.close();
         stmt.close();
@@ -54,10 +54,11 @@ public class AvausDao implements Dao<Avaus, Integer> {
         while (rs.next()) {
             Integer id = rs.getInt("id");
             String lahettaja = rs.getString("lahettaja");
+            String otsikko = rs.getString("otsikko");
             Timestamp lahetysaika = rs.getTimestamp("lahetysaika");
             String viesti = rs.getString("viesti");
 
-            Avaus ka = new Avaus(id, lahettaja, lahetysaika, viesti);
+            Avaus ka = new Avaus(id, lahettaja, otsikko, lahetysaika, viesti);
         }
 
         rs.close();
@@ -69,7 +70,7 @@ public class AvausDao implements Dao<Avaus, Integer> {
     
     public List<Avaus> findAllIn(Integer key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Avaus WHERE viestiketju = ?");
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Avaus WHERE keskustelualue = ?");
         stmt.setObject(1, key);
 
         ResultSet rs = stmt.executeQuery();
@@ -78,10 +79,11 @@ public class AvausDao implements Dao<Avaus, Integer> {
         while (rs.next()) {
             Integer id = rs.getInt("id");
             String lahettaja = rs.getString("lahettaja");
+            String otsikko = rs.getString("otsikko");
             Timestamp lahetysaika = rs.getTimestamp("lahetysaika");
             String viesti = rs.getString("viesti");
 
-            avaukset.add(new Avaus(id, lahettaja, lahetysaika, viesti));
+            avaukset.add(new Avaus(id, lahettaja, otsikko, lahetysaika, viesti));
         }
 
         rs.close();

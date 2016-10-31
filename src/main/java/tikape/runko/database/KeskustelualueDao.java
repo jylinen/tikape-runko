@@ -4,17 +4,16 @@ import java.sql.*;
 import java.util.*;
 import tikape.runko.domain.Avaus;
 import tikape.runko.domain.Keskustelualue;
-import tikape.runko.domain.Viestiketju;
 
 
 public class KeskustelualueDao implements Dao<Keskustelualue, Integer> {
 
     private Database database;
-    private Dao<Viestiketju, Integer> viestiketjuDao;
+    private Dao<Avaus, Integer> avausDao;
 
     public KeskustelualueDao(Database database) {
         this.database = database;
-        this.viestiketjuDao = viestiketjuDao;
+        this.avausDao = avausDao;
     }
     
      @Override

@@ -8,14 +8,16 @@ public class Avaus {
     
     private Integer id;
     private String lahettaja;
+    private String otsikko;
     private Timestamp lahetysaika;
     private String viesti;
-    private Viestiketju viestiketju;
-    private List<Vastaus> keskusteluvastaukset;
+    private Keskustelualue keskustelualue;
+    private List<Vastaus> vastaukset;
 
-    public Avaus(Integer id, String lahettaja, Timestamp lahetysaika, String viesti) {
+    public Avaus(Integer id, String lahettaja, String otsikko, Timestamp lahetysaika, String viesti) {
         this.id = id;
         this.lahettaja = lahettaja;
+        this.otsikko = otsikko;
         this.lahetysaika = lahetysaika;
         this.viesti = viesti;
     }
@@ -34,6 +36,15 @@ public class Avaus {
 
     public void setLahettaja(String lahettaja) {
         this.lahettaja = lahettaja;
+    }
+    
+    
+    public String getOtsikko() {
+        return this.otsikko;
+    }
+
+    public void setOtsikko(String otsikko) {
+        this.otsikko = otsikko;
     }
     
     public Timestamp getLahetysAika() {
