@@ -5,7 +5,7 @@ import java.util.*;
 import java.sql.*;
 import tikape.runko.domain.Vastaus;
 
-public class VastausDao implements Dao<Vastaus, Integer> {
+public class VastausDao implements Dao<Vastaus, Integer, String> {
 
     private Database database;
 
@@ -85,6 +85,11 @@ public class VastausDao implements Dao<Vastaus, Integer> {
         connection.close();
 
         return vastaukset;
+    }
+    
+    
+    public void addNew(String name) throws SQLException {
+        
     }
 
     @Override

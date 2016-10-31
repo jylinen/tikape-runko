@@ -8,7 +8,7 @@ import java.util.*;
 import java.sql.*;
 import tikape.runko.domain.Avaus;
 
-public class AvausDao implements Dao<Avaus, Integer> {
+public class AvausDao implements Dao<Avaus, Integer, String> {
 
     private Database database;
 
@@ -91,6 +91,11 @@ public class AvausDao implements Dao<Avaus, Integer> {
         connection.close();
 
         return avaukset;
+    }
+    
+    
+    public void addNew(String name) throws SQLException {
+        
     }
 
     @Override
