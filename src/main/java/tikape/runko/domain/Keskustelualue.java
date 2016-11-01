@@ -7,7 +7,8 @@ public class Keskustelualue {
     private String nimi;
     private List<Avaus> avaukset;
 
-    public Keskustelualue(String nimi) {
+    public Keskustelualue(Integer id, String nimi) {
+        this.id = id;
         this.nimi = nimi;
     }
 

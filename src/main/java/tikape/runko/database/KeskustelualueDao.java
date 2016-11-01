@@ -26,10 +26,11 @@ public class KeskustelualueDao implements Dao<Keskustelualue, Integer, String> {
         if (!hasOne) {
             return null;
         }
-
+        
+        Integer id = rs.getInt("id");
         String nimi = rs.getString("nimi");
 
-        Keskustelualue k = new Keskustelualue(nimi);
+        Keskustelualue k = new Keskustelualue(id, nimi);
 
         rs.close();
         stmt.close();
@@ -48,10 +49,11 @@ public class KeskustelualueDao implements Dao<Keskustelualue, Integer, String> {
         List<Keskustelualue> keskustelualueet = new ArrayList<>();
 
         while (rs.next()) {
-
+            
+            Integer id = rs.getInt("id");
             String nimi = rs.getString("nimi");
 
-            keskustelualueet.add(new Keskustelualue(nimi));
+            keskustelualueet.add(new Keskustelualue(id, nimi));
         }
 
         return keskustelualueet;
@@ -67,7 +69,7 @@ public class KeskustelualueDao implements Dao<Keskustelualue, Integer, String> {
         PreparedStatement stmt = connection.prepareStatement("INSERT INTO Keskustelualue (nimi) VALUES (?)");
         stmt.setObject(1, name);
         
-        Keskustelualue k = new Keskustelualue(name);
+        stmt.execute();
 
         stmt.close();
         connection.close();

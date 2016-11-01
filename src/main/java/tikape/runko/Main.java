@@ -25,9 +25,10 @@ public class Main {
 
         post("/", (req, res) -> {
             String nimi = req.queryParams("nimi");
-            System.out.println("Vastaanotettiin " + nimi);
-
-            return "Kerrotaan siitä tiedon lähettäjälle: " + nimi;
+            keskustelualueDao.addNew(nimi);
+            
+            res.redirect("/");
+            return "";
         });
 
         get("/keskustelualue/:id", (req, res) -> {
