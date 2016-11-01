@@ -40,21 +40,15 @@ public class Database {
 
         // tietokantataulujen luomiseen tarvittavat komennot suoritusjärjestyksessä
         //taulut.add("DROP TABLE Keskustelualue;");
-        taulut.add("CREATE TABLE Keskustelualue (id integer PRIMARY KEY, nimi varchar(255));");
+        taulut.add("CREATE TABLE Keskustelualue (id integer PRIMARY KEY, nimi varchar(255) UNIQUE);");
         taulut.add("INSERT INTO Keskustelualue (nimi) VALUES ('Ohjelmointi');");
         taulut.add("INSERT INTO Keskustelualue (nimi) VALUES ('Pelit');");
         taulut.add("INSERT INTO Keskustelualue (nimi) VALUES ('Koneet');");
-
-        taulut.add("CREATE TABLE Viestiketju (id integer PRIMARY KEY, nimi varchar(255), keskustelualue integer, "
-                + "FOREIGN KEY(Keskustelualue) REFERENCES Keskustelualue(id));");
-        taulut.add("INSERT INTO Viestiketju (nimi, keskustelualue) VALUES ('Testi', 1);");
-        taulut.add("INSERT INTO Viestiketju (nimi, keskustelualue) VALUES ('Testi2', 2);");
-        taulut.add("INSERT INTO Viestiketju (nimi, keskustelualue) VALUES ('TestiEri', 1);");
         
-        taulut.add("CREATE TABLE Avaus (id integer PRIMARY KEY, lahettaja varchar(64) NOT NULL, otsikko varchar(20) NOT NULL, lahetysaika timestamp, " 
-                + "viesti varchar(3000) NOT NULL, keskustelualue integer NOT NULL, FOREIGN KEY(keskustelualue) REFERENCES Viestiketju(id));");
-        taulut.add("INSERT INTO Avaus (lahettaja, otsikko, viesti, keskustelualue) VALUES ('jussi', 'testi', 'terve vaan!', 1);");
-        taulut.add("INSERT INTO Avaus (lahettaja, otsikko, viesti, keskustelualue) VALUES ('aatu', 'testi2', 'toimi saatana!', 1);");
+        taulut.add("CREATE TABLE Avaus (id integer PRIMARY KEY, otsikko varchar(20) NOT NULL UNIQUE, " 
+                + "keskustelualue integer NOT NULL, FOREIGN KEY(keskustelualue) REFERENCES Viestiketju(id));");
+        taulut.add("INSERT INTO Avaus (otsikko, keskustelualue) VALUES ('testi', 1);");
+        taulut.add("INSERT INTO Avaus (otsikko, keskustelualue) VALUES ('testi2', 1);");
         
         taulut.add("CREATE TABLE Vastaus (id integer PRIMARY KEY, lahettaja varchar(64) NOT NULL, lahetysaika timestamp, " 
                 + "viesti varchar(3000) NOT NULL, avaus integer NOT NULL, FOREIGN KEY(avaus) REFERENCES Avaus(id));");

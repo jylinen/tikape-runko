@@ -5,7 +5,7 @@ import java.util.*;
 import java.sql.*;
 import tikape.runko.domain.Vastaus;
 
-public class VastausDao implements Dao<Vastaus, Integer, String> {
+public class VastausDao implements Dao<Vastaus, Integer, String, String> {
 
     private Database database;
 
@@ -88,8 +88,17 @@ public class VastausDao implements Dao<Vastaus, Integer, String> {
     }
     
     
-    public void addNew(String name) throws SQLException {
+    public void addNew(Integer key, String name, String message) throws SQLException {
+        Connection connection = database.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Vastaus (lahettaja, viesti, avaus) VALUES (?, ?, ?)");
+        stmt.setObject(1, name);
+        stmt.setObject(2, message);
+        stmt.setObject(3, key);
         
+        stmt.execute();
+
+        stmt.close();
+        connection.close();
     }
 
     @Override

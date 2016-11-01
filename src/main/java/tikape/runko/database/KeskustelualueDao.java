@@ -5,10 +5,10 @@ import java.util.*;
 import tikape.runko.domain.Avaus;
 import tikape.runko.domain.Keskustelualue;
 
-public class KeskustelualueDao implements Dao<Keskustelualue, Integer, String> {
+public class KeskustelualueDao implements Dao<Keskustelualue, Integer, String, String> {
 
     private Database database;
-    private Dao<Avaus, Integer, String> avausDao;
+    private Dao<Avaus, Integer, String, String> avausDao;
 
     public KeskustelualueDao(Database database) {
         this.database = database;
@@ -64,7 +64,7 @@ public class KeskustelualueDao implements Dao<Keskustelualue, Integer, String> {
         return null;
     }
 
-    public void addNew(String name) throws SQLException {
+    public void addNew(Integer key, String name, String message) throws SQLException {
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("INSERT INTO Keskustelualue (nimi) VALUES (?)");
         stmt.setObject(1, name);

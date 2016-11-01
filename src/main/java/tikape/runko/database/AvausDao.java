@@ -1,14 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package tikape.runko.database;
+
 import java.util.*;
 import java.sql.*;
 import tikape.runko.domain.Avaus;
 
-public class AvausDao implements Dao<Avaus, Integer, String> {
+public class AvausDao implements Dao<Avaus, Integer, String, String> {
 
     private Database database;
 
@@ -29,12 +26,9 @@ public class AvausDao implements Dao<Avaus, Integer, String> {
         }
 
         Integer id = rs.getInt("id");
-        String lahettaja = rs.getString("lahettaja");
         String otsikko = rs.getString("otsikko");
-        Timestamp lahetysaika = rs.getTimestamp("lahetysaika");
-        String viesti = rs.getString("viesti");
 
-        Avaus ka = new Avaus(id, lahettaja, otsikko, lahetysaika, viesti);
+        Avaus ka = new Avaus(id, otsikko);
 
         rs.close();
         stmt.close();
@@ -53,12 +47,9 @@ public class AvausDao implements Dao<Avaus, Integer, String> {
         List<Avaus> avaukset = new ArrayList<>();
         while (rs.next()) {
             Integer id = rs.getInt("id");
-            String lahettaja = rs.getString("lahettaja");
             String otsikko = rs.getString("otsikko");
-            Timestamp lahetysaika = rs.getTimestamp("lahetysaika");
-            String viesti = rs.getString("viesti");
 
-            Avaus ka = new Avaus(id, lahettaja, otsikko, lahetysaika, viesti);
+            avaukset.add(new Avaus(id, otsikko));
         }
 
         rs.close();
@@ -67,7 +58,7 @@ public class AvausDao implements Dao<Avaus, Integer, String> {
 
         return avaukset;
     }
-    
+
     public List<Avaus> findAllIn(Integer key) throws SQLException {
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Avaus WHERE keskustelualue = ?");
@@ -75,15 +66,12 @@ public class AvausDao implements Dao<Avaus, Integer, String> {
 
         ResultSet rs = stmt.executeQuery();
         List<Avaus> avaukset = new ArrayList<>();
-        
+
         while (rs.next()) {
             Integer id = rs.getInt("id");
-            String lahettaja = rs.getString("lahettaja");
             String otsikko = rs.getString("otsikko");
-            Timestamp lahetysaika = rs.getTimestamp("lahetysaika");
-            String viesti = rs.getString("viesti");
 
-            avaukset.add(new Avaus(id, lahettaja, otsikko, lahetysaika, viesti));
+            avaukset.add(new Avaus(id, otsikko));
         }
 
         rs.close();
@@ -92,10 +80,17 @@ public class AvausDao implements Dao<Avaus, Integer, String> {
 
         return avaukset;
     }
-    
-    
-    public void addNew(String name) throws SQLException {
-        
+
+    public void addNew(Integer key, String name, String message) throws SQLException {
+        Connection connection = database.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Vastaus (lahettaja, viesti) VALUES (?, ?)");
+        stmt.setObject(1, name);
+        stmt.setObject(2, message);
+
+        stmt.execute();
+
+        stmt.close();
+        connection.close();
     }
 
     @Override

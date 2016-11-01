@@ -15,5 +15,16 @@
                 <a th:href="${'/keskustelualue/' + keskustelualue.id + '/avaus/' + avaus.id}">linkki</a>
             </li>
         </ol>
+        
+        Luo uusi avaus:
+        <form method="POST" action="/keskustelualue/:id">
+            Otsikko:<br/>
+            <input type="text" name="otsikko"/><br/>
+            Lähettäjä:<br/>
+            <input type="text" name="lahettaja"/><br/>
+            Viesti (max 200 merkkiä):<br/>
+            <textarea cols="50" rows="4" name="viesti"/><br/>
+            <input type="submit" value="Lisää avaus"/><br/>
+        </form>
     </body>
 </html>
